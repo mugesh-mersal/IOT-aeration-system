@@ -1,0 +1,23 @@
+import json, time
+from boltiot import Bolt
+minimum_limit = 28
+maximum_limit = 35
+mybolt = Bolt(API_KEY, DEVICE_ID)
+count = 0
+response = mybolt.analogRead('A0')
+
+for count in range(100):
+	response = mybolt.analogRead('A0')
+	data = json.loads(response)
+	sensor_value = int(data['value'])
+	temper = sensor_value//10.24
+	if emper >=maximum_limit:
+		print("The temperature is high :{} celcius".format(temper))
+		print("The fan is turned ON now")
+		mybolt.digitalWrite(4, 'HIGH')
+	elif temper < maximum_limit:
+		print("The temperature is within the threshold :{} celcius".format(temper))
+	else:
+		print("INVALID")
+	time.sleep(60)
+ 
